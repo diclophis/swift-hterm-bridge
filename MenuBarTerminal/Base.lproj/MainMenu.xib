@@ -18,7 +18,7 @@
                 <outlet property="statusMenu" destination="RPR-P2-zMB" id="gmI-wU-VCF"/>
                 <outlet property="terminalView" destination="iQ2-yv-Twt" id="qNk-he-guS"/>
                 <outlet property="terminaltem" destination="nfU-Yq-ZKN" id="057-tu-jQg"/>
-                <outlet property="webView" destination="rJk-h5-aWt" id="LlX-t5-Pf7"/>
+                <outlet property="webView" destination="rJk-h5-aWt" id="RsP-Di-3J4"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -35,7 +35,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="43" y="277.5"/>
+            <point key="canvasLocation" x="-117" y="139.5"/>
         </menu>
         <customView canDrawConcurrently="YES" id="iQ2-yv-Twt" customClass="TerminalView" customModule="MenuBarTerminal" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
@@ -43,20 +43,24 @@
             <subviews>
                 <webView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJk-h5-aWt">
                     <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
-                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
+                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO">
                         <nil key="identifier"/>
                     </webPreferences>
+                    <connections>
+                        <outlet property="UIDelegate" destination="Voe-Tx-rLC" id="loR-Ym-X9c"/>
+                        <outlet property="downloadDelegate" destination="Voe-Tx-rLC" id="iz4-Df-SUo"/>
+                        <outlet property="frameLoadDelegate" destination="Voe-Tx-rLC" id="Aik-5f-fEb"/>
+                        <outlet property="policyDelegate" destination="Voe-Tx-rLC" id="ieN-hw-0gx"/>
+                        <outlet property="resourceLoadDelegate" destination="Voe-Tx-rLC" id="Eda-Qn-ZoA"/>
+                    </connections>
                 </webView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="rJk-h5-aWt" secondAttribute="trailing" id="LkS-Jm-dZO"/>
-                <constraint firstAttribute="bottom" secondItem="rJk-h5-aWt" secondAttribute="bottom" id="Lxi-Du-S4M"/>
-                <constraint firstItem="rJk-h5-aWt" firstAttribute="top" secondItem="iQ2-yv-Twt" secondAttribute="top" id="Wyj-tx-z5w"/>
-                <constraint firstItem="rJk-h5-aWt" firstAttribute="leading" secondItem="iQ2-yv-Twt" secondAttribute="leading" id="gjO-JX-gD1"/>
+                <constraint firstItem="rJk-h5-aWt" firstAttribute="top" secondItem="iQ2-yv-Twt" secondAttribute="top" id="DYg-x9-Nxu"/>
+                <constraint firstAttribute="trailing" secondItem="rJk-h5-aWt" secondAttribute="trailing" id="loz-4s-6oJ"/>
+                <constraint firstAttribute="bottom" secondItem="rJk-h5-aWt" secondAttribute="bottom" id="mCn-bU-J8n"/>
+                <constraint firstItem="rJk-h5-aWt" firstAttribute="leading" secondItem="iQ2-yv-Twt" secondAttribute="leading" id="vOl-Vi-No8"/>
             </constraints>
-            <connections>
-                <outlet property="webView" destination="rJk-h5-aWt" id="HEk-DB-wGJ"/>
-            </connections>
             <point key="canvasLocation" x="149" y="463"/>
         </customView>
     </objects>
