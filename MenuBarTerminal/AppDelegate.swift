@@ -13,6 +13,11 @@ import WebKit
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
 
+    ////
+    
+//    private let	_masterFileHandle:NSFileHandle
+//    private let	_childProcessID:pid_t
+    
     @IBOutlet weak var statusMenu: NSMenu!
     
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
@@ -50,7 +55,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         //webView.mainFrame.navigationDelegate = self
         
 
-        
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -80,10 +84,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
     
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         print("Webview did finish load")
-        //webView.stringByEvaluatingJavaScriptFromString(<#T##script: String!##String!#>)
-        let script = "(function() { return document.body.innerHTML; })();"
+        let script = "(function() { return terminalReady(); })();"
         if let returnedString = webView.stringByEvaluatingJavaScriptFromString(script) {
-            print("the result is \(returnedString)")
+            print("READY? \(returnedString)")
+
+            if (returnedString == "ready") {
+                print("STARTING COMMAND")
+                self.initTerm("/bin/bash", arguments: ["/bin/bash", "--rcfile", "~/.profile", "-i", "-c", "eval `ssh-agent -s` && env && devops console"], environment: ["TERM=xterm-256color", "PATH=/bin:/usr/bin:/usr/local/bin", "USER=mavenlink", "HOME=/Users/mavenlink"])
+            }
         }
     }
     func chung() {
@@ -108,8 +116,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         }
     }
 
-    
-    
     ///	Provides simple access to BSD `pty`.
     ///
     ///	This spawns a new child process using supplied arguments,
@@ -134,69 +140,71 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
     ///
     ///	This is a sort of `NSTask`-like class and modeled on it.
     ///	This does not support setting terminal dimensions.
-    ///
-    //public class PseudoTeletypewriter {
-
-    /*
-    public init?(path:String, arguments:[String], environment:[String]) {
+    
+    func initTerm(path:String, arguments:[String], environment:[String]) {
         assert(arguments.count >= 1)
         assert(path.hasSuffix(arguments[0]))
         
         let	r	=	forkPseudoTeletypewriter()
         if r.result.ok {
             if r.result.isRunningInParentProcess {
-                debugLog("parent: ok, child pid = \(r.result.processID)")
-                self._masterFileHandle	=	r.master.toFileHandle(true)
-                self._childProcessID	=	r.result.processID
+                print("parent: ok, child pid = \(r.result.processID)")
+                //self._masterFileHandle	=	r.master.toFileHandle(true)
+                let	masterFileHandle:NSFileHandle = r.master.toFileHandle(true)
+                
+                //masterFileHandle.availableData
+                masterFileHandle.waitForDataInBackgroundAndNotify()
+                
+                // Set up the observer function
+                let notificationCenter = NSNotificationCenter.defaultCenter()
+                notificationCenter.addObserver(self, selector: "receivedData:", name: NSFileHandleDataAvailableNotification, object: nil)
             } else {
-                debugLog("child: ok")
+                print("child: ok")
                 execute(path, arguments, environment)
                 fatalError("Returning from `execute` means the command was failed. This is unrecoverable error in child process side, so just abort the execution.")
             }
         } else {
-            debugLog("`forkpty` failed.")
-            
-            ///	Below two lines are useless but inserted to suppress compiler error.
-            _masterFileHandle	=	NSFileHandle()
-            _childProcessID		=	0
-            return	nil
+            print("`forkpty` failed.")
         }
     }
-    deinit {
-        
-    }
-    
-    
-    public var	masterFileHandle:NSFileHandle {
+
+
+    /*
+    var	masterFileHandle:NSFileHandle {
         get {
             return	_masterFileHandle
         }
     }
     
-    public var	childProcessID:pid_t {
+    var	childProcessID:pid_t {
         get {
             return	_childProcessID
         }
     }
     
     ///	Waits for child process finishes synchronously.
-    public func waitUntilChildProcessFinishes() {
+    func waitUntilChildProcessFinishes() {
         var	stat_loc	=	0 as Int32
         let	childpid1	=	waitpid(_childProcessID, &stat_loc, 0)
-        debugLog("child process quit: pid = \(childpid1)")
+        print("child process quit: pid = \(childpid1)")
     }
-    
-    
-    
-    
-    
-    
-    ////
-    
-    private let	_masterFileHandle:NSFileHandle
-    private let	_childProcessID:pid_t
-
-    
 */
-}
+    func receivedData(notif : NSNotification) {
+        // Unpack the FileHandle from the notification
+        let fh:NSFileHandle = notif.object as! NSFileHandle
+        // Get the data from the FileHandle
+        let data = fh.availableData
+        // Only deal with the data if it actually exists
+        if data.length > 0 {
+            // Since we just got the notification from fh, we must tell it to notify us again when it gets more data
+            fh.waitForDataInBackgroundAndNotify()
+            // Convert the data into a string
+            let string = NSString(data: data, encoding: NSASCIIStringEncoding)
+            
 
+        
+            
+            webView.windowScriptObject.callWebScriptMethod("appendStdout", withArguments: [string!])
+        }
+    }
+}
