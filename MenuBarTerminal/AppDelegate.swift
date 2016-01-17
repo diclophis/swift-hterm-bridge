@@ -10,12 +10,20 @@ import Cocoa
 import WebKit
 import Foundation
 
+//protocol AppDelegate {
+//}
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
 
     ////
+    var masterFileHandle:NSFileHandle?
+    var outboundJson:NSString?
     
-//    private let	_masterFileHandle:NSFileHandle
+    //@prop
+    
+    // = NSFileHandle(fileDescriptor: 0)
+    
 //    private let	_childProcessID:pid_t
     
     @IBOutlet weak var statusMenu: NSMenu!
@@ -37,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
         let icon = NSImage(named: "statusIcon")
-        //icon?.template = true // best for dark mode
+        icon?.template = true // best for dark mode
         statusItem.image = icon
         statusItem.menu = statusMenu
         terminaltem.view = terminalView
@@ -56,78 +64,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         print("Webview fail with error \(error)");
     }
     
-//    func webView(webView: WebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: WWebViewNavigationType) -&gt; Bool {
-//    return true;
-//    }
-    
-    
-//    func webViewDidStartLoad(webView: WebView!) {
-//        print("Webview started Loading")
-//    }
-//    
-//    func webViewDidFinishLoad(webView: WebView!) {
-//        print("Webview did finish load")
-//    }
-    
-//    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-//        print("Webview did finish load")
-//    }
-    
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         print("Webview did finish load")
         let script = "(function() { return terminalReady(); })();"
         if let returnedString = webView.stringByEvaluatingJavaScriptFromString(script) {
             if (returnedString == "ready") {
-                self.initTerm("/bin/bash", arguments: ["/bin/bash", "--rcfile", "~/.profile", "-i", "-c", "eval `ssh-agent -s` && env && devops console"], environment: ["TERM=xterm-256color", "PATH=/bin:/usr/bin:/usr/local/bin", "USER=mavenlink", "HOME=/Users/mavenlink"])
+                self.initTerm("/bin/bash", arguments: ["/bin/bash", "--rcfile", "~/.profile", "-i", "-c", "eval `ssh-agent -s` && env && htop -d 5"], environment: ["TERM=xterm-256color", "PATH=/bin:/usr/bin:/usr/local/bin", "USER=mavenlink", "HOME=/Users/mavenlink"])
             }
         }
     }
-    func chung() {
-        print("a")
-        sleep(100)
-        wang()
-    }
     
-    func tonite() {
-        
+    func run() {
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            self.readData()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.sendData()
+                self.run()
+            })
+        })
     }
-    
-    func wang() {
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            // do some task
-            self.chung();
-            dispatch_async(dispatch_get_main_queue()) {
-                // update some UI
-                self.tonite()
-            }
-        }
-    }
-
-    ///	Provides simple access to BSD `pty`.
-    ///
-    ///	This spawns a new child process using supplied arguments,
-    ///	and setup a proper pseudo terminal connected to it.
-    ///
-    ///	The child process will run in interactive mode terminal,
-    ///	and will emit terminal escape code accordingly if you set
-    ///	a proper terminal environment variable.
-    ///
-    ///		TERM=ansi
-    ///
-    ///	Here's full recommended example.
-    ///
-    ///		let	pty	=	PseudoTeletypewriter(path: "/bin/ls", arguments: ["/bin/ls", "-Gbla"], environment: ["TERM=ansi"])!
-    ///		println(pty.masterFileHandle.readDataToEndOfFile().toString())
-    ///		pty.waitUntilChildProcessFinishes()
-    ///
-    ///	It is recommended to use executable name as the first argument by convention.
-    ///
-    ///	The child process will be launched immediately when you
-    ///	instantiate this class.
-    ///
-    ///	This is a sort of `NSTask`-like class and modeled on it.
-    ///	This does not support setting terminal dimensions.
     
     func initTerm(path:String, arguments:[String], environment:[String]) {
         assert(arguments.count >= 1)
@@ -137,17 +94,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         if r.result.ok {
             if r.result.isRunningInParentProcess {
                 print("parent: ok, child pid = \(r.result.processID)")
-                //self._masterFileHandle	=	r.master.toFileHandle(true)
-                let	masterFileHandle:NSFileHandle = r.master.toFileHandle(true)
-                
-                //masterFileHandle.availableData
-                masterFileHandle.waitForDataInBackgroundAndNotify()
-                
-                // Set up the observer function
-                let notificationCenter = NSNotificationCenter.defaultCenter()
-                notificationCenter.addObserver(self, selector: "receivedData:", name: NSFileHandleDataAvailableNotification, object: nil)
+                self.masterFileHandle = r.master.toFileHandle(true)
+                self.run()
             } else {
-                //print("child: ok")
                 execute(path, arguments, environment)
                 fatalError("Returning from `execute` means the command was failed. This is unrecoverable error in child process side, so just abort the execution.")
             }
@@ -156,16 +105,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         }
     }
 
-    func receivedData(notif : NSNotification) {
-        // Unpack the FileHandle from the notification
-        let fh:NSFileHandle = notif.object as! NSFileHandle
-        fh.waitForDataInBackgroundAndNotify()
-
+    func sendData() { //(notif : NSNotification) {
+        if (self.outboundJson != nil) {
+            if let res = self.webView.windowScriptObject.callWebScriptMethod("appendStdout", withArguments: [self.outboundJson!]) {
+                if (false) { print(res) }
+            }
+            self.outboundJson = nil
+        }
+    }
+    
+    func readData() {
         // Get the data from the FileHandle
-        let data = fh.availableData
+        let data = self.masterFileHandle?.availableData
+        
         // Only deal with the data if it actually exists
-        if data.length > 0 {
-            let string = NSString(data: data, encoding: NSUTF8StringEncoding)
+        if data?.length > 0 {
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
 
             var jsonObject = [String: NSString]()
             jsonObject["raw"] = string
@@ -173,17 +128,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
             do {
                 let outboundData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions(rawValue: 0))
                 
-                
-                if let outboundJson = NSString(data: outboundData, encoding: NSUTF8StringEncoding) {
-                    print("fff \(outboundJson)")
-                    
-                    if let res = self.webView.windowScriptObject.callWebScriptMethod("appendStdout", withArguments: [outboundJson]) {
-                        print(res)
-                    }
-                }
+                self.outboundJson = NSString(data: outboundData, encoding: NSUTF8StringEncoding)
                 
             } catch {
                 print("json error")
+                self.outboundJson = nil
             }
         }
     }

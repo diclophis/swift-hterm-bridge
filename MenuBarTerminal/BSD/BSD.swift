@@ -5,6 +5,30 @@
 //  Created by Hoon H. on 2015/01/12.
 //  Copyright (c) 2015 Eonil. All rights reserved.
 //
+///	Provides simple access to BSD `pty`.
+///
+///	This spawns a new child process using supplied arguments,
+///	and setup a proper pseudo terminal connected to it.
+///
+///	The child process will run in interactive mode terminal,
+///	and will emit terminal escape code accordingly if you set
+///	a proper terminal environment variable.
+///
+///		TERM=ansi
+///
+///	Here's full recommended example.
+///
+///		let	pty	=	PseudoTeletypewriter(path: "/bin/ls", arguments: ["/bin/ls", "-Gbla"], environment: ["TERM=ansi"])!
+///		println(pty.masterFileHandle.readDataToEndOfFile().toString())
+///		pty.waitUntilChildProcessFinishes()
+///
+///	It is recommended to use executable name as the first argument by convention.
+///
+///	The child process will be launched immediately when you
+///	instantiate this class.
+///
+///	This is a sort of `NSTask`-like class and modeled on it.
+///	This does not support setting terminal dimensions.
 
 import Foundation
 
@@ -92,10 +116,9 @@ private func withCPointerToNullTerminatingCArrayOfCStrings(strings:[String], _ b
 	let	a1	=	a.map { (d:NSMutableData) -> UnsafeMutablePointer<Int8> in
 		return	UnsafeMutablePointer<Int8>(d.mutableBytes)
 		} + [nil as UnsafeMutablePointer<Int8>]
-	print(a1)
+	//print(a1)
 	
 	a1.withUnsafeBufferPointer { (p:UnsafeBufferPointer<UnsafeMutablePointer<Int8>>) -> () in
 		block(p.baseAddress)
 	}
 }
-
