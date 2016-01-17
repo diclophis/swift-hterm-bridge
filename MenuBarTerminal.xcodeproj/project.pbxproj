@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC5EE3E71C4B51EE00243A65 /* Html in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE3E61C4B51EE00243A65 /* Html */; };
 		FC6C59C71C4B01740086E12D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6C59C61C4B01740086E12D /* AppDelegate.swift */; };
 		FC6C59C91C4B01740086E12D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6C59C81C4B01740086E12D /* Assets.xcassets */; };
 		FC6C59CC1C4B01740086E12D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6C59CA1C4B01740086E12D /* MainMenu.xib */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FC5EE3E61C4B51EE00243A65 /* Html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Html; sourceTree = "<group>"; };
 		FC6C59C31C4B01740086E12D /* MenuBarTerminal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuBarTerminal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6C59C61C4B01740086E12D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC6C59C81C4B01740086E12D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 		FC6C59C51C4B01740086E12D /* MenuBarTerminal */ = {
 			isa = PBXGroup;
 			children = (
+				FC5EE3E61C4B51EE00243A65 /* Html */,
 				FC6C59C61C4B01740086E12D /* AppDelegate.swift */,
 				FC6C59C81C4B01740086E12D /* Assets.xcassets */,
 				FC6C59CA1C4B01740086E12D /* MainMenu.xib */,
@@ -120,6 +123,7 @@
 			files = (
 				FC6C59C91C4B01740086E12D /* Assets.xcassets in Resources */,
 				FC6C59CC1C4B01740086E12D /* MainMenu.xib in Resources */,
+				FC5EE3E71C4B51EE00243A65 /* Html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
