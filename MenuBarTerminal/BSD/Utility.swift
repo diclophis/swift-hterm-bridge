@@ -43,11 +43,3 @@ extension NSData {
 		return	r!
 	}
 }
-
-
-
-func debugLog<T>(@autoclosure v:()->T) {
-	#if DEBUG
-		println("\(v)")
-	#endif
-}

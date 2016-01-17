@@ -227,7 +227,24 @@ var terminalReady = function() {
   }
 };
 
-var appendStdout = function(str) {
-  terminalSingelton.io.writeUTF16(str);
-  return "wtf";
+var appendStdout = function(inboundJson) {
+    var msg = JSON.parse(inboundJson);
+    if (msg.raw && msg.raw.length > 0) { // see: https://github.com/flori/json for discussion on `to_json_raw_object`
+      /*
+      var decoded = '';
+      for (var i=0; i<msg.raw.length; i++) {
+        //NOTE: what is the difference here?
+        //decoded += String.fromCodePoint(msg.raw[i]); // & 0xff ??
+        decoded += String.fromCharCode(msg.raw[i]); // & 0xff ??
+      }
+
+      //this.io.writeUTF16(decoded);
+      terminalSingelton.io.writeUTF16(decoded);
+      return decoded;
+      */
+      terminalSingelton.io.writeUTF16(msg.raw);
+      return "ok";
+    }
+
+    return "empty";
 };

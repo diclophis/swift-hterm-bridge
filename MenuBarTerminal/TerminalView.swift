@@ -11,12 +11,8 @@ import WebKit
 
 class TerminalView: NSView {
 
-    @IBOutlet weak var webView: WebView!
+    //@IBOutlet weak var webView: WebView!
     
-//    override func drawRect(dirtyRect: NSRect) {
-//        super.drawRect(dirtyRect)
-//
-//        // Drawing code here.
-//    }
+
     
 }

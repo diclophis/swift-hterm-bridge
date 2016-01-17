@@ -15,12 +15,3 @@ pid_t
 Eonil____BSD_C_fork() {
 	return	fork();
 }
-
-
-
-//void
-//test1() {
-//	char*	args[3]		=	{"/usr/bin/printf", "AAA", NULL};
-//	char*	env[1]		=	{NULL};
-//	execve("/usr/bin/printf", args, env);
-//}

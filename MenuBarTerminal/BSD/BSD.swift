@@ -10,7 +10,6 @@ import Foundation
 
 //	BSD functions properly wrapped in more simple and typesafe Swift manner.
 
-
 public struct FileDescriptor {
 	public func toFileHandle(closeOnDealloc: Bool) -> NSFileHandle {
 		return	NSFileHandle(fileDescriptor: value, closeOnDealloc: closeOnDealloc)
@@ -78,26 +77,7 @@ public func execute(path:String, _ arguments:[String], _ environment:[String]) {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///	MARK:
-
-
 
 ///	Generates proper pointer arrays for `exec~` family calls.
 ///	Terminatin `NULL` is required for `exec~` family calls.
@@ -112,23 +92,10 @@ private func withCPointerToNullTerminatingCArrayOfCStrings(strings:[String], _ b
 	let	a1	=	a.map { (d:NSMutableData) -> UnsafeMutablePointer<Int8> in
 		return	UnsafeMutablePointer<Int8>(d.mutableBytes)
 		} + [nil as UnsafeMutablePointer<Int8>]
-	debugLog(a1)
+	print(a1)
 	
 	a1.withUnsafeBufferPointer { (p:UnsafeBufferPointer<UnsafeMutablePointer<Int8>>) -> () in
 		block(p.baseAddress)
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

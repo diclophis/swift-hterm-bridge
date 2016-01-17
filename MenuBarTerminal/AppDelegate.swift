@@ -8,7 +8,7 @@
 
 import Cocoa
 import WebKit
-//import BSD
+import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
@@ -42,19 +42,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         statusItem.menu = statusMenu
         terminaltem.view = terminalView
         
-        //NSBundle.mainBundle().pathForResource(<#T##name: String?##String?#>, ofType: <#T##String?#>, inDirectory: <#T##String?#>)
         let path = NSBundle.mainBundle().pathForResource("index", ofType: "html", inDirectory: "Html")!
         let url = NSURL(string: path)!
         let urlRequest = NSURLRequest(URL: url)
         webView.mainFrame.loadRequest(urlRequest)
-        
-        
-
-        //webView.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: "https://archive.org")!))
-        
-        //webView.mainFrame.navigationDelegate = self
-        
-
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -86,10 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         print("Webview did finish load")
         let script = "(function() { return terminalReady(); })();"
         if let returnedString = webView.stringByEvaluatingJavaScriptFromString(script) {
-            print("READY? \(returnedString)")
-
             if (returnedString == "ready") {
-                print("STARTING COMMAND")
                 self.initTerm("/bin/bash", arguments: ["/bin/bash", "--rcfile", "~/.profile", "-i", "-c", "eval `ssh-agent -s` && env && devops console"], environment: ["TERM=xterm-256color", "PATH=/bin:/usr/bin:/usr/local/bin", "USER=mavenlink", "HOME=/Users/mavenlink"])
             }
         }
@@ -159,7 +147,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                 let notificationCenter = NSNotificationCenter.defaultCenter()
                 notificationCenter.addObserver(self, selector: "receivedData:", name: NSFileHandleDataAvailableNotification, object: nil)
             } else {
-                print("child: ok")
+                //print("child: ok")
                 execute(path, arguments, environment)
                 fatalError("Returning from `execute` means the command was failed. This is unrecoverable error in child process side, so just abort the execution.")
             }
@@ -168,43 +156,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         }
     }
 
-
-    /*
-    var	masterFileHandle:NSFileHandle {
-        get {
-            return	_masterFileHandle
-        }
-    }
-    
-    var	childProcessID:pid_t {
-        get {
-            return	_childProcessID
-        }
-    }
-    
-    ///	Waits for child process finishes synchronously.
-    func waitUntilChildProcessFinishes() {
-        var	stat_loc	=	0 as Int32
-        let	childpid1	=	waitpid(_childProcessID, &stat_loc, 0)
-        print("child process quit: pid = \(childpid1)")
-    }
-*/
     func receivedData(notif : NSNotification) {
         // Unpack the FileHandle from the notification
         let fh:NSFileHandle = notif.object as! NSFileHandle
+        fh.waitForDataInBackgroundAndNotify()
+
         // Get the data from the FileHandle
         let data = fh.availableData
         // Only deal with the data if it actually exists
         if data.length > 0 {
-            // Since we just got the notification from fh, we must tell it to notify us again when it gets more data
-            fh.waitForDataInBackgroundAndNotify()
-            // Convert the data into a string
-            let string = NSString(data: data, encoding: NSASCIIStringEncoding)
-            
+            let string = NSString(data: data, encoding: NSUTF8StringEncoding)
 
-        
+            var jsonObject = [String: NSString]()
+            jsonObject["raw"] = string
             
-            webView.windowScriptObject.callWebScriptMethod("appendStdout", withArguments: [string!])
+            do {
+                let outboundData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions(rawValue: 0))
+                
+                
+                if let outboundJson = NSString(data: outboundData, encoding: NSUTF8StringEncoding) {
+                    print("fff \(outboundJson)")
+                    
+                    if let res = self.webView.windowScriptObject.callWebScriptMethod("appendStdout", withArguments: [outboundJson]) {
+                        print(res)
+                    }
+                }
+                
+            } catch {
+                print("json error")
+            }
         }
     }
 }
