@@ -38,11 +38,11 @@
             <point key="canvasLocation" x="-117" y="139.5"/>
         </menu>
         <customView canDrawConcurrently="YES" id="iQ2-yv-Twt" customClass="TerminalView" customModule="MenuBarTerminal" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="720" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="768" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <webView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJk-h5-aWt">
-                    <rect key="frame" x="0.0" y="0.0" width="720" height="480"/>
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="480"/>
                     <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO">
                         <nil key="identifier"/>
                     </webPreferences>
@@ -56,10 +56,10 @@
                 </webView>
             </subviews>
             <constraints>
-                <constraint firstItem="rJk-h5-aWt" firstAttribute="top" secondItem="iQ2-yv-Twt" secondAttribute="top" id="05B-bu-quy"/>
-                <constraint firstAttribute="bottom" secondItem="rJk-h5-aWt" secondAttribute="bottom" id="gT4-v3-4Cn"/>
-                <constraint firstItem="rJk-h5-aWt" firstAttribute="leading" secondItem="iQ2-yv-Twt" secondAttribute="leading" id="gd8-WS-wvu"/>
-                <constraint firstAttribute="trailing" secondItem="rJk-h5-aWt" secondAttribute="trailing" id="y1B-11-Set"/>
+                <constraint firstAttribute="bottom" secondItem="rJk-h5-aWt" secondAttribute="bottom" id="Ea9-yg-ZrI"/>
+                <constraint firstItem="rJk-h5-aWt" firstAttribute="top" secondItem="iQ2-yv-Twt" secondAttribute="top" id="Z5M-RL-y3P"/>
+                <constraint firstItem="rJk-h5-aWt" firstAttribute="leading" secondItem="iQ2-yv-Twt" secondAttribute="leading" id="dJ3-w6-Zec"/>
+                <constraint firstAttribute="trailing" secondItem="rJk-h5-aWt" secondAttribute="trailing" id="p5n-9y-ivd"/>
             </constraints>
             <point key="canvasLocation" x="149" y="463"/>
         </customView>

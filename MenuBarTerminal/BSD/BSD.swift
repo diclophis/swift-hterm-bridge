@@ -81,8 +81,10 @@ public func fork() -> ForkResult {
 ///	https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/openpty.3.html
 public func forkPseudoTeletypewriter() -> (result:ForkResult, master:FileDescriptor) {
 	var	amaster		=	0 as Int32
-
-    let	pid			=	forkpty(&amaster, nil, nil, nil)
+    var win:Winsize = Winsize(ws_row: 20, ws_col: 83, ws_xpixel: 768, ws_ypixel: 480)
+    
+    //forkpty(<#T##UnsafeMutablePointer<Int32>#>, <#T##UnsafeMutablePointer<Int8>#>, <#T##UnsafeMutablePointer<termios>#>, <#T##UnsafeMutablePointer<winsize>#>)
+    let	pid			=	forkpty(&amaster, nil, nil, &win)
     
 	return	(ForkResult(value: pid), FileDescriptor(value: amaster))
 }
@@ -102,6 +104,8 @@ public func execute(path:String, _ arguments:[String], _ environment:[String]) {
 		fatalError("`execve` call returned that means failure.")
 	}
 }
+
+//struct winsize win;
 
 ///	MARK:
 
