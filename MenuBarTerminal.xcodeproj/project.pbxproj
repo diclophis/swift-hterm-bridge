@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		FC5EE3E71C4B51EE00243A65 /* Html in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE3E61C4B51EE00243A65 /* Html */; };
+		FC5EE3F11C4B746E00243A65 /* BSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE3EB1C4B746E00243A65 /* BSD.swift */; };
+		FC5EE3F21C4B746E00243A65 /* BSD_C.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE3ED1C4B746E00243A65 /* BSD_C.m */; };
+		FC5EE3F41C4B746E00243A65 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE3F01C4B746E00243A65 /* Utility.swift */; };
 		FC6C59C71C4B01740086E12D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6C59C61C4B01740086E12D /* AppDelegate.swift */; };
 		FC6C59C91C4B01740086E12D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6C59C81C4B01740086E12D /* Assets.xcassets */; };
 		FC6C59CC1C4B01740086E12D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6C59CA1C4B01740086E12D /* MainMenu.xib */; };
@@ -16,6 +19,11 @@
 
 /* Begin PBXFileReference section */
 		FC5EE3E61C4B51EE00243A65 /* Html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Html; sourceTree = "<group>"; };
+		FC5EE3EA1C4B746E00243A65 /* MenuBarTerminal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MenuBarTerminal-Bridging-Header.h"; sourceTree = "<group>"; };
+		FC5EE3EB1C4B746E00243A65 /* BSD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BSD.swift; path = BSD/BSD.swift; sourceTree = "<group>"; };
+		FC5EE3EC1C4B746E00243A65 /* BSD_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSD_C.h; path = BSD/BSD_C.h; sourceTree = "<group>"; };
+		FC5EE3ED1C4B746E00243A65 /* BSD_C.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSD_C.m; path = BSD/BSD_C.m; sourceTree = "<group>"; };
+		FC5EE3F01C4B746E00243A65 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = BSD/Utility.swift; sourceTree = "<group>"; };
 		FC6C59C31C4B01740086E12D /* MenuBarTerminal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuBarTerminal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6C59C61C4B01740086E12D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC6C59C81C4B01740086E12D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,12 +62,17 @@
 		FC6C59C51C4B01740086E12D /* MenuBarTerminal */ = {
 			isa = PBXGroup;
 			children = (
+				FC5EE3EB1C4B746E00243A65 /* BSD.swift */,
+				FC5EE3EC1C4B746E00243A65 /* BSD_C.h */,
+				FC5EE3ED1C4B746E00243A65 /* BSD_C.m */,
+				FC5EE3F01C4B746E00243A65 /* Utility.swift */,
 				FC5EE3E61C4B51EE00243A65 /* Html */,
 				FC6C59C61C4B01740086E12D /* AppDelegate.swift */,
 				FC6C59C81C4B01740086E12D /* Assets.xcassets */,
 				FC6C59CA1C4B01740086E12D /* MainMenu.xib */,
 				FC6C59CD1C4B01740086E12D /* Info.plist */,
 				FCF637471C4B4867007DF08E /* TerminalView.swift */,
+				FC5EE3EA1C4B746E00243A65 /* MenuBarTerminal-Bridging-Header.h */,
 			);
 			path = MenuBarTerminal;
 			sourceTree = "<group>";
@@ -135,6 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCF637481C4B4867007DF08E /* TerminalView.swift in Sources */,
+				FC5EE3F41C4B746E00243A65 /* Utility.swift in Sources */,
+				FC5EE3F21C4B746E00243A65 /* BSD_C.m in Sources */,
+				FC5EE3F11C4B746E00243A65 /* BSD.swift in Sources */,
 				FC6C59C71C4B01740086E12D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,11 +253,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MenuBarTerminal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = diclophis.MenuBarTerminal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MenuBarTerminal/MenuBarTerminal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -249,11 +268,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MenuBarTerminal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = diclophis.MenuBarTerminal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MenuBarTerminal/MenuBarTerminal-Bridging-Header.h";
 			};
 			name = Release;
 		};

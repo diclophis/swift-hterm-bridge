@@ -1,4 +1,5 @@
 var terminalSingelton = null;
+var outgoingBuffer = null;
 
 var Rutty = function(argv, terminal) {
 
@@ -78,8 +79,8 @@ Rutty.prototype.sendString_ = function(str) {
     return;
   }
 
-  if (this.sendingSweep === null) {
-    this.sendingSweep = true;
+//  if (this.sendingSweep === null) {
+//    this.sendingSweep = true;
 
     /*
     var oReq = new XMLHttpRequest();
@@ -88,12 +89,16 @@ Rutty.prototype.sendString_ = function(str) {
 
       //console.log("sending", str);
 
-      this.sendingSweep = null;
-      if (this.pendingString.length > 0) {
-        var joinedPendingStdin = this.pendingString.join('');
-        this.pendingString = [];
-        this.sendString_(joinedPendingStdin);
-      }
+      outgoingBuffer = outgoingBuffer || ''
+      outgoingBuffer = outgoingBuffer.concat(str);
+
+//this.io.writeUTF16("x" + outgoingBuffer);
+//      this.sendingSweep = null;
+ //     if (this.pendingString.length > 0) {
+ //       var joinedPendingStdin = this.pendingString.join('');
+ //       this.pendingString = [];
+ //       this.sendString_(joinedPendingStdin);
+ //     }
 
     /*
     }.bind(this);
@@ -112,9 +117,9 @@ Rutty.prototype.sendString_ = function(str) {
     oReq.open("POST", this.terminalForm.action + "/stdin", true);
     oReq.send(formData);
     */
-  } else {
-    this.pendingString.push(str);
-  }
+//  } else {
+//    this.pendingString.push(str);
+//  }
 };
 
 Rutty.prototype.onTerminalResize = function(cols, rows) {
@@ -243,8 +248,14 @@ var appendStdout = function(inboundJson) {
       return decoded;
       */
       terminalSingelton.io.writeUTF16(msg.raw);
-      return "ok";
     }
+};
 
-    return "empty";
+var fetchStdin = function() {
+    //return "ok";
+    //return "empty";
+    //var copy = new String(outgoingBuffer); //.slice(0);
+    var copy = outgoingBuffer.slice(0);
+    outgoingBuffer = null;
+    return copy;
 };
