@@ -14,15 +14,16 @@ import Foundation
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
 
+
     var masterFileHandle:NSFileHandle?
     var outboundJson:NSString?
     var list:Array<NSData>?
     var outList:Array<NSString>?
-
-
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+    let script = "(function() { return terminalReady(); })();"
 
-    
+
+    //@IBOutlet weak var window: NSWindow!
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var terminaltem: NSMenuItem!
     @IBOutlet weak var terminalView: TerminalView!
@@ -48,25 +49,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         webView.mainFrame.loadRequest(urlRequest)
     }
 
+    
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
-    
+
+
     func webView(webView: WebView!, didFailLoadWithError error: NSError!) {
         print("Webview fail with error \(error)");
     }
-    
+
+
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
-        let script = "(function() { return terminalReady(); })();"
-        if let returnedString = webView.stringByEvaluatingJavaScriptFromString(script) {
+        if let returnedString = webView.stringByEvaluatingJavaScriptFromString(self.script) {
             if (returnedString == "ready") {
-                self.initTerm("/bin/bash", arguments: ["/bin/bash", "--rcfile", "~/.profile", "-i", "-c", "reset && clear && eval `ssh-agent -s` && devops vpn carbon.mavenlink.net"], environment: ["TERM=xterm-256color", "PATH=/bin:/usr/bin:/usr/local/bin", "USER=mavenlink", "HOME=/Users/mavenlink"])
+                self.statusItem.view?.window?.makeFirstResponder(self.webView)
+                self.initTerm("/bin/bash",
+                    arguments: ["/bin/bash", "--rcfile", "~/.profile", "-c", "eval `ssh-agent -s` && htop -d 5"],
+                    environment: [
+                    "LANG=en_US.UTF-8",
+                    "TERM=xterm-256color",
+                    "PATH=/bin:/usr/bin:/usr/local/bin",
+                    "USER=mavenlink",
+                    "HOME=/Users/mavenlink"])
             }
         }
     }
-    
+
+
     func run() {
-        let qualityOfServiceClass = QOS_CLASS_USER_INTERACTIVE//QOS_CLASS_BACKGROUND
+        let qualityOfServiceClass = QOS_CLASS_USER_INTERACTIVE //QOS_CLASS_BACKGROUND
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(backgroundQueue, {
             self.readData()
@@ -76,28 +88,38 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
             })
         })
     }
-    
+
+
     func initTerm(path:String, arguments:[String], environment:[String]) {
         assert(arguments.count >= 1)
         assert(path.hasSuffix(arguments[0]))
-        let	r	=	forkPseudoTeletypewriter()
+
+        let	r = forkPseudoTeletypewriter()
         if r.result.ok {
-        
             if r.result.isRunningInParentProcess {
                 print("parent: ok, child pid = \(r.result.processID)")
-                //self.ready = nil
+
                 self.list = Array<NSData>()
                 self.outList = Array<NSString>()
+
                 let handler =  { (file:NSFileHandle!) -> Void in
-                    let ready = file.availableData.copy() as? NSData
-                    self.sync(self.list!) {
-                        self.list!.append(ready!)
+                    if let ready:NSData = file.availableData {
+                        if (ready.length > 0) {
+                            self.sync(self.list!) {
+                                self.list!.append(ready)
+                            }
+                        } else {
+                            print("done")
+                            exit(0)
+                        }
                     }
                 }
-                
+
+
                 self.masterFileHandle = r.master.toFileHandle(true)
                 self.masterFileHandle?.readabilityHandler = handler
-                
+
+
                 self.run()
             } else {
                 execute(path, arguments, environment)
@@ -108,6 +130,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         }
     }
 
+
     func sendData() {
         self.sync(self.outList!) {
             for outboundJson in self.outList! {
@@ -117,15 +140,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         }
 
         if let res:String = self.webView.windowScriptObject.callWebScriptMethod("fetchStdin", withArguments: []) as AnyObject? as? String {
-            //print("asdasd \(res)")
             self.masterFileHandle?.writeData(res.dataUsingEncoding(NSUTF8StringEncoding)!)
         }
     }
-    
+
+
     func readData() {
-        // Get the data from the FileHandle
         let allData = NSMutableData()
-        
+
         sync(self.list!) {
             if (self.list!.count > 0) {
                 for data in self.list! {
@@ -134,8 +156,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
             }
             self.list!.removeAll()
         }
-        
-        let string = NSString(data: allData, encoding: NSUTF8StringEncoding)
+
+        let string = NSString(data: allData, encoding: NSASCIIStringEncoding)
         
         var jsonObject = [String: NSString]()
         jsonObject["raw"] = string
@@ -149,7 +171,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
             print("json error")
         }
     }
-    
+
+
     func sync(lock: AnyObject, closure: () -> Void) {
         objc_sync_enter(lock)
         closure()

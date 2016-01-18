@@ -6,13 +6,10 @@
 //
 //
 
+
 import Cocoa
 import WebKit
 
+
 class TerminalView: NSView {
-
-    //@IBOutlet weak var webView: WebView!
-    
-
-    
 }

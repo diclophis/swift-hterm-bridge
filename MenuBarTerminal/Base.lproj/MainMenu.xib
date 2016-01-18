@@ -22,28 +22,22 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <menu id="RPR-P2-zMB">
+        <menu showsStateColumn="NO" autoenablesItems="NO" id="RPR-P2-zMB">
             <items>
                 <menuItem title="Terminal" id="nfU-Yq-ZKN" userLabel="Terminal">
+                    <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="5hc-Fk-z3t"/>
-                <menuItem title="Quit" id="sO2-9j-9hZ">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="quitClicked:" target="Voe-Tx-rLC" id="sDp-sJ-SUo"/>
-                    </connections>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="-117" y="139.5"/>
         </menu>
-        <customView canDrawConcurrently="YES" id="iQ2-yv-Twt" customClass="TerminalView" customModule="MenuBarTerminal" customModuleProvider="target">
+        <customView autoresizesSubviews="NO" id="iQ2-yv-Twt" customClass="TerminalView" customModule="MenuBarTerminal" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <webView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJk-h5-aWt">
+                <webView autoresizesSubviews="NO" focusRingType="none" maintainsBackForwardList="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJk-h5-aWt">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="480"/>
-                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO">
+                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
                         <nil key="identifier"/>
                     </webPreferences>
                     <connections>

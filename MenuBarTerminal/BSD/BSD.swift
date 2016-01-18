@@ -81,7 +81,7 @@ public func fork() -> ForkResult {
 ///	https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/openpty.3.html
 public func forkPseudoTeletypewriter() -> (result:ForkResult, master:FileDescriptor) {
 	var	amaster		=	0 as Int32
-    var win:Winsize = Winsize(ws_row: 20, ws_col: 83, ws_xpixel: 768, ws_ypixel: 480)
+    var win:Winsize = Winsize(ws_row: 26, ws_col: 85, ws_xpixel: 0, ws_ypixel: 0)
     
     //forkpty(<#T##UnsafeMutablePointer<Int32>#>, <#T##UnsafeMutablePointer<Int8>#>, <#T##UnsafeMutablePointer<termios>#>, <#T##UnsafeMutablePointer<winsize>#>)
     let	pid			=	forkpty(&amaster, nil, nil, &win)
