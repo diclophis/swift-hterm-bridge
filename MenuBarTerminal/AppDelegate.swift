@@ -23,7 +23,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
     let script = "(function() { return terminalReady(); })();"
 
 
-    //@IBOutlet weak var window: NSWindow!
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var terminaltem: NSMenuItem!
     @IBOutlet weak var terminalView: TerminalView!
@@ -65,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
             if (returnedString == "ready") {
                 self.statusItem.view?.window?.makeFirstResponder(self.webView)
                 self.initTerm("/bin/bash",
-                    arguments: ["/bin/bash", "--rcfile", "~/.profile", "-c", "eval `ssh-agent -s` && htop -d 5"],
+                    arguments: ["/bin/bash", "--rcfile", "~/.profile", "-i"], //, "-c", "eval `ssh-agent -s` && devops vpn carbon.mavenlink.net"
                     environment: [
                     "LANG=en_US.UTF-8",
                     "TERM=xterm-256color",
@@ -106,7 +105,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                     if let ready:NSData = file.availableData {
                         if (ready.length > 0) {
                             self.sync(self.list!) {
-                                self.list!.append(ready)
+                                self.list?.append(ready)
                             }
                         } else {
                             print("done")
