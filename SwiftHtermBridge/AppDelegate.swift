@@ -18,11 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
     private var masterFileHandle:NSFileHandle!
     private var list = [NSData]()
     private var outList = [NSString]()
-
     private let script = "(function() { return terminalReady(); })();"
-    //let qualityOfServiceClass = QOS_CLASS_USER_INTERACTIVE //QOS_CLASS_BACKGROUND // //
     private let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-
 
 
     @IBOutlet weak var window: NSWindow!
@@ -57,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         if let returnedString = webView.stringByEvaluatingJavaScriptFromString(self.script) {
             if (returnedString == "ready") {
                 if (self.masterFileHandle != nil) {
-                    print("!@#!@#!@#!@#")
+                    print("webView didFinishLoading before terminal fd present")
                 } else {
                     self.initTerm("/bin/bash",
                         arguments: ["/bin/bash", "-i", "-l"], //"--rcfile", "~/.profile"
