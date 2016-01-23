@@ -1,0 +1,306 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FC5EE4021C4DEC3D00243A65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4011C4DEC3D00243A65 /* AppDelegate.swift */; };
+		FC5EE4041C4DEC3D00243A65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE4031C4DEC3D00243A65 /* Assets.xcassets */; };
+		FC5EE4071C4DEC3D00243A65 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE4051C4DEC3D00243A65 /* MainMenu.xib */; };
+		FC5EE40F1C4DECDB00243A65 /* BSD in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE40E1C4DECDB00243A65 /* BSD */; };
+		FC5EE4111C4DECFE00243A65 /* Html in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE4101C4DECFE00243A65 /* Html */; };
+		FC5EE4191C4DEEF000243A65 /* BSD_C.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4161C4DEEF000243A65 /* BSD_C.m */; };
+		FC5EE41A1C4DEEF000243A65 /* BSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4171C4DEEF000243A65 /* BSD.swift */; };
+		FC5EE41B1C4DEEF000243A65 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4181C4DEEF000243A65 /* Utility.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FC5EE3FE1C4DEC3D00243A65 /* SwiftHtermBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftHtermBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC5EE4011C4DEC3D00243A65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FC5EE4031C4DEC3D00243A65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FC5EE4061C4DEC3D00243A65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FC5EE4081C4DEC3D00243A65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC5EE4101C4DECFE00243A65 /* Html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Html; sourceTree = "<group>"; };
+		FC5EE4121C4DED8400243A65 /* SwiftHtermBridge-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftHtermBridge-Bridging-Header.h"; sourceTree = "<group>"; };
+		FC5EE4161C4DEEF000243A65 /* BSD_C.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BSD_C.m; path = BSD/BSD_C.m; sourceTree = "<group>"; };
+		FC5EE4171C4DEEF000243A65 /* BSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BSD.swift; path = BSD/BSD.swift; sourceTree = "<group>"; };
+		FC5EE4181C4DEEF000243A65 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = BSD/Utility.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FC5EE3FB1C4DEC3D00243A65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FC5EE3F51C4DEC3D00243A65 = {
+			isa = PBXGroup;
+			children = (
+				FC5EE4001C4DEC3D00243A65 /* SwiftHtermBridge */,
+				FC5EE3FF1C4DEC3D00243A65 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FC5EE3FF1C4DEC3D00243A65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC5EE3FE1C4DEC3D00243A65 /* SwiftHtermBridge.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FC5EE4001C4DEC3D00243A65 /* SwiftHtermBridge */ = {
+			isa = PBXGroup;
+			children = (
+				FC5EE4101C4DECFE00243A65 /* Html */,
+				FC5EE4031C4DEC3D00243A65 /* Assets.xcassets */,
+				FC5EE41C1C4DEEFD00243A65 /* BSD */,
+				FC5EE4121C4DED8400243A65 /* SwiftHtermBridge-Bridging-Header.h */,
+				FC5EE4011C4DEC3D00243A65 /* AppDelegate.swift */,
+				FC5EE4051C4DEC3D00243A65 /* MainMenu.xib */,
+				FC5EE4081C4DEC3D00243A65 /* Info.plist */,
+			);
+			path = SwiftHtermBridge;
+			sourceTree = "<group>";
+		};
+		FC5EE41C1C4DEEFD00243A65 /* BSD */ = {
+			isa = PBXGroup;
+			children = (
+				FC5EE4161C4DEEF000243A65 /* BSD_C.m */,
+				FC5EE4171C4DEEF000243A65 /* BSD.swift */,
+				FC5EE4181C4DEEF000243A65 /* Utility.swift */,
+			);
+			name = BSD;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FC5EE3FD1C4DEC3D00243A65 /* SwiftHtermBridge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC5EE40B1C4DEC3D00243A65 /* Build configuration list for PBXNativeTarget "SwiftHtermBridge" */;
+			buildPhases = (
+				FC5EE3FA1C4DEC3D00243A65 /* Sources */,
+				FC5EE3FB1C4DEC3D00243A65 /* Frameworks */,
+				FC5EE3FC1C4DEC3D00243A65 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftHtermBridge;
+			productName = SwiftHtermBridge;
+			productReference = FC5EE3FE1C4DEC3D00243A65 /* SwiftHtermBridge.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FC5EE3F61C4DEC3D00243A65 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				TargetAttributes = {
+					FC5EE3FD1C4DEC3D00243A65 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = FC5EE3F91C4DEC3D00243A65 /* Build configuration list for PBXProject "SwiftHtermBridge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FC5EE3F51C4DEC3D00243A65;
+			productRefGroup = FC5EE3FF1C4DEC3D00243A65 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FC5EE3FD1C4DEC3D00243A65 /* SwiftHtermBridge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FC5EE3FC1C4DEC3D00243A65 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC5EE40F1C4DECDB00243A65 /* BSD in Resources */,
+				FC5EE4111C4DECFE00243A65 /* Html in Resources */,
+				FC5EE4041C4DEC3D00243A65 /* Assets.xcassets in Resources */,
+				FC5EE4071C4DEC3D00243A65 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FC5EE3FA1C4DEC3D00243A65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC5EE4191C4DEEF000243A65 /* BSD_C.m in Sources */,
+				FC5EE41A1C4DEEF000243A65 /* BSD.swift in Sources */,
+				FC5EE41B1C4DEEF000243A65 /* Utility.swift in Sources */,
+				FC5EE4021C4DEC3D00243A65 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FC5EE4051C4DEC3D00243A65 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC5EE4061C4DEC3D00243A65 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FC5EE4091C4DEC3D00243A65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FC5EE40A1C4DEC3D00243A65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FC5EE40C1C4DEC3D00243A65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftHtermBridge/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = diclophis.SwiftHtermBridge;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftHtermBridge/SwiftHtermBridge-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		FC5EE40D1C4DEC3D00243A65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftHtermBridge/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = diclophis.SwiftHtermBridge;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftHtermBridge/SwiftHtermBridge-Bridging-Header.h";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FC5EE3F91C4DEC3D00243A65 /* Build configuration list for PBXProject "SwiftHtermBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC5EE4091C4DEC3D00243A65 /* Debug */,
+				FC5EE40A1C4DEC3D00243A65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC5EE40B1C4DEC3D00243A65 /* Build configuration list for PBXNativeTarget "SwiftHtermBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC5EE40C1C4DEC3D00243A65 /* Debug */,
+				FC5EE40D1C4DEC3D00243A65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FC5EE3F61C4DEC3D00243A65 /* Project object */;
+}

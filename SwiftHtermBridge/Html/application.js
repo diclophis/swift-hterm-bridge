@@ -1,5 +1,7 @@
 var terminalSingelton = null;
 var outgoingBuffer = null;
+var lastBits = 0;
+var copy = null;
 
 
 var Rutty = function(argv, terminal) {
@@ -81,15 +83,20 @@ var terminalReady = function() {
   }
 };
 
-var appendStdout = function(inboundJson) {
-  var msg = JSON.parse(inboundJson);
-  if (msg.raw && msg.raw.length > 0) { // see: https://github.com/flori/json for discussion on `to_json_raw_object`
-    terminalSingelton.io.writeUTF16(msg.raw);
-  }
-};
-
 var fetchStdin = function() {
-  var copy = outgoingBuffer.slice(0);
-  outgoingBuffer = null;
-  return copy;
+  var args = (arguments.length === 1?[arguments[0]]:Array.apply(null, arguments));
+  if (args.length) {
+    var i = 0;
+    for (i=0; i<args.length; i+=1) {
+      inboundJson = args[i];
+      var msg = JSON.parse(inboundJson);
+      if (msg.raw) { // see: https://github.com/flori/json for discussion on `to_json_raw_object`
+        terminalSingelton.io.writeUTF16(msg.raw);
+      }
+    }
+  }
+
+  var thisBits = lastBits;
+  lastBits = outgoingBuffer.length;
+  return JSON.stringify({data: outgoingBuffer.slice(thisBits)});
 };
