@@ -6,9 +6,13 @@
 //  Copyright (c) 2015 Eonil. All rights reserved.
 //
 
+
 import Foundation
 
+
 extension NSData {
+
+
 	func toUInt8Array() -> [UInt8] {
 		let	p	=	self.bytes
 		let	p1	=	UnsafePointer<UInt8>(p)
@@ -20,9 +24,13 @@ extension NSData {
 		
 		return	bs
 	}
+
+
 	func toString() -> String {
 		return	NSString(data: self, encoding: NSUTF8StringEncoding)! as String
 	}
+
+
 	class func fromUInt8Array(bs:[UInt8]) -> NSData {
 		var	r	=	nil as NSData?
 		bs.withUnsafeBufferPointer { (p:UnsafeBufferPointer<UInt8>) -> () in
@@ -31,7 +39,8 @@ extension NSData {
 		}
 		return	r!
 	}
-	
+
+
 	///	Assumes `cCharacters` is C-string.
 	class func fromCCharArray(cCharacters:[CChar]) -> NSData {
 		precondition(cCharacters.count == 0 || cCharacters[cCharacters.endIndex.predecessor()] == 0)
@@ -42,4 +51,6 @@ extension NSData {
 		}
 		return	r!
 	}
+
+
 }

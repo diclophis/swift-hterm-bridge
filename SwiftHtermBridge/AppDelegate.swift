@@ -60,7 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                         arguments: ["/bin/bash", "-i", "-l"], //"--rcfile", "~/.profile"
                         environment: [
                         "LANG=en_US.UTF-8",
-                        "TERM=xterm-256color",
+                        "TERM=xterm",
                         "PATH=/bin:/usr/bin:/usr/local/bin",
                         "USER=\(NSUserName())",
                         "HOME=\(NSHomeDirectory())"])
@@ -85,11 +85,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         assert(arguments.count >= 1)
         assert(path.hasSuffix(arguments[0]))
 
-        let	r = forkPseudoTeletypewriter()
+        //execve()
+        
+        let	r = forkPseudoTeletypewriter(self.window.frame.size)
         if r.result.ok {
             if r.result.isRunningInParentProcess {
                 print("parent: ok, child pid = \(r.result.processID)")
 
+                NSSetUncaughtExceptionHandler { exception in
+                    print(exception)
+                    //print(exception.callStackSymbols)
+                    exit(1)
+                }
 
                 let handler =  { (file:NSFileHandle!) -> Void in
                     self.sync(self) {
@@ -106,8 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
 
 
                 self.masterFileHandle = r.master.toFileHandle(false)
-                self.masterFileHandle!.readabilityHandler = handler
-
+                self.masterFileHandle.readabilityHandler = handler
 
                 self.run()
             } else {
@@ -127,7 +133,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                     if let raw = try NSJSONSerialization.JSONObjectWithData(res.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject],
                         data = raw["data"] as? NSString {
                         if let dd:NSData = data.dataUsingEncoding(NSUTF8StringEncoding) {
-                            self.masterFileHandle.writeData(dd)
+                                try self.masterFileHandle.writeData(dd)
+
                         }
                     } else {
                         print("json parsing error in stdin - a")
@@ -177,4 +184,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         closure()
         objc_sync_exit(lock)
     }
+
+
 }

@@ -10,9 +10,8 @@
 		FC5EE4021C4DEC3D00243A65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4011C4DEC3D00243A65 /* AppDelegate.swift */; };
 		FC5EE4041C4DEC3D00243A65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE4031C4DEC3D00243A65 /* Assets.xcassets */; };
 		FC5EE4071C4DEC3D00243A65 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE4051C4DEC3D00243A65 /* MainMenu.xib */; };
-		FC5EE40F1C4DECDB00243A65 /* BSD in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE40E1C4DECDB00243A65 /* BSD */; };
+		FC5EE40F1C4DECDB00243A65 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		FC5EE4111C4DECFE00243A65 /* Html in Resources */ = {isa = PBXBuildFile; fileRef = FC5EE4101C4DECFE00243A65 /* Html */; };
-		FC5EE4191C4DEEF000243A65 /* BSD_C.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4161C4DEEF000243A65 /* BSD_C.m */; };
 		FC5EE41A1C4DEEF000243A65 /* BSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4171C4DEEF000243A65 /* BSD.swift */; };
 		FC5EE41B1C4DEEF000243A65 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5EE4181C4DEEF000243A65 /* Utility.swift */; };
 /* End PBXBuildFile section */
@@ -25,9 +24,9 @@
 		FC5EE4081C4DEC3D00243A65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC5EE4101C4DECFE00243A65 /* Html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Html; sourceTree = "<group>"; };
 		FC5EE4121C4DED8400243A65 /* SwiftHtermBridge-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftHtermBridge-Bridging-Header.h"; sourceTree = "<group>"; };
-		FC5EE4161C4DEEF000243A65 /* BSD_C.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BSD_C.m; path = BSD/BSD_C.m; sourceTree = "<group>"; };
 		FC5EE4171C4DEEF000243A65 /* BSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BSD.swift; path = BSD/BSD.swift; sourceTree = "<group>"; };
 		FC5EE4181C4DEEF000243A65 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = BSD/Utility.swift; sourceTree = "<group>"; };
+		FCCB60371C5494CA00462F53 /* BSD_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSD_C.h; path = BSD/BSD_C.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +73,7 @@
 		FC5EE41C1C4DEEFD00243A65 /* BSD */ = {
 			isa = PBXGroup;
 			children = (
-				FC5EE4161C4DEEF000243A65 /* BSD_C.m */,
+				FCCB60371C5494CA00462F53 /* BSD_C.h */,
 				FC5EE4171C4DEEF000243A65 /* BSD.swift */,
 				FC5EE4181C4DEEF000243A65 /* Utility.swift */,
 			);
@@ -138,7 +137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC5EE40F1C4DECDB00243A65 /* BSD in Resources */,
+				FC5EE40F1C4DECDB00243A65 /* (null) in Resources */,
 				FC5EE4111C4DECFE00243A65 /* Html in Resources */,
 				FC5EE4041C4DEC3D00243A65 /* Assets.xcassets in Resources */,
 				FC5EE4071C4DEC3D00243A65 /* MainMenu.xib in Resources */,
@@ -152,7 +151,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC5EE4191C4DEEF000243A65 /* BSD_C.m in Sources */,
 				FC5EE41A1C4DEEF000243A65 /* BSD.swift in Sources */,
 				FC5EE41B1C4DEEF000243A65 /* Utility.swift in Sources */,
 				FC5EE4021C4DEC3D00243A65 /* AppDelegate.swift in Sources */,

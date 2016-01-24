@@ -91,7 +91,8 @@ var fetchStdin = function() {
       inboundJson = args[i];
       var msg = JSON.parse(inboundJson);
       if (msg.raw) { // see: https://github.com/flori/json for discussion on `to_json_raw_object`
-        terminalSingelton.io.writeUTF16(msg.raw);
+        //terminalSingelton.io.writeUTF16(msg.raw);
+        terminalSingelton.io.writeUTF8(msg.raw);
       }
     }
   }
