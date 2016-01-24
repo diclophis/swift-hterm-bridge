@@ -29,7 +29,8 @@
 ///
 ///	This is a sort of `NSTask`-like class and modeled on it.
 ///	This does not support setting terminal dimensions.
-
+//  https://github.com/Eonil/PseudoTeletypewriter.Swift/blob/master/LICENSE.md
+//
 
 import Foundation
 

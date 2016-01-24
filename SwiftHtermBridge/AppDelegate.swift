@@ -20,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
     private var outList = [NSString]()
     private let script = "(function() { return terminalReady(); })();"
     private let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+    private var pid:pid_t!
 
 
     @IBOutlet weak var window: NSWindow!
@@ -60,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                         arguments: ["/bin/bash", "-i", "-l"], //"--rcfile", "~/.profile"
                         environment: [
                         "LANG=en_US.UTF-8",
-                        "TERM=xterm",
+                        "TERM=xterm-color",
                         "PATH=/bin:/usr/bin:/usr/local/bin",
                         "USER=\(NSUserName())",
                         "HOME=\(NSHomeDirectory())"])
@@ -71,13 +72,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
 
 
     func run() {
-        self.sendData()
-        dispatch_async(backgroundQueue, {
-            self.readData()
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.run()
-            })
-        })
+        if let alive:Int32 = kill(self.pid, 0) {
+            if (-1 == alive) {
+                exit(1)
+            } else {
+                self.sendData()
+                dispatch_async(backgroundQueue, {
+                    self.readData()
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.run()
+                    })
+                })
+            }
+        } else {
+            print("killed: \(errno)")
+            exit(1)
+        }
     }
 
 
@@ -85,12 +95,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
         assert(arguments.count >= 1)
         assert(path.hasSuffix(arguments[0]))
 
-        //execve()
-        
+
         let	r = forkPseudoTeletypewriter(self.window.frame.size)
         if r.result.ok {
             if r.result.isRunningInParentProcess {
                 print("parent: ok, child pid = \(r.result.processID)")
+                self.pid = r.result.processID
+
 
                 NSSetUncaughtExceptionHandler { exception in
                     print(exception)
@@ -98,15 +109,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                     exit(1)
                 }
 
+
                 let handler =  { (file:NSFileHandle!) -> Void in
                     self.sync(self) {
                         if let ready:NSData = file.availableData {
                             if ready.length > 0 {
                                 self.list.append(ready)
+                            } else {
+                                file.closeFile()
+                                var	status = 0 as Int32
+                                waitpid(self.pid, &status, 0)
+                                print("exited: \(status)")
                             }
                         } else {
-                            print("done")
-                            exit(0)
+                            print("stalled")
                         }
                     }
                 }
@@ -114,6 +130,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
 
                 self.masterFileHandle = r.master.toFileHandle(false)
                 self.masterFileHandle.readabilityHandler = handler
+
 
                 self.run()
             } else {
@@ -133,8 +150,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WebFrameLoadDelegate {
                     if let raw = try NSJSONSerialization.JSONObjectWithData(res.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject],
                         data = raw["data"] as? NSString {
                         if let dd:NSData = data.dataUsingEncoding(NSUTF8StringEncoding) {
-                                try self.masterFileHandle.writeData(dd)
-
+                            self.masterFileHandle.writeData(dd)
                         }
                     } else {
                         print("json parsing error in stdin - a")
